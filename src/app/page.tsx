@@ -1,8 +1,11 @@
+import Menu from "@/components/Menu/Menu";
+import Hero from "@/components/sections/Hero";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <h1>Hi, I'm Differm. It is my portfolio.</h1>
+    <div className="mx-auto flex flex-col   w-[1280px] h-screen">
+      <Menu />
+      <Hero />
     </div>
   );
 }
