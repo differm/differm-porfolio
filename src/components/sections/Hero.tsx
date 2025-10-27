@@ -1,65 +1,69 @@
 "use client";
 
-import { poppins, roboto } from "@/fonts";
-import { useAnimateDimensions } from "@/hook/useAnimateDimensions";
-import { useAnimateFromSide } from "@/hook/useAnimateFromSide";
-import { useRef } from "react";
+import Image from "next/image";
+import { useAnimateDimensions } from "../../hook/useAnimateDimensions";
+import { useAnimateFromBottom } from "../../hook/useAnimateFromBottom";
+import { useFadeInEffect } from "../../hook/useFadeInEffect";
+import { useTheme } from "@/context/ThemeContext";
 
 const Hero = () => {
-  const textRef = useRef<HTMLDivElement>(null);
-  useAnimateFromSide(textRef, "left");
-  const boxRef = useAnimateDimensions({
+  const { colors } = useTheme();
+  
+  const circleRef = useAnimateDimensions({
     initialDimensions: {
-      width: "2.4rem",
-      height: "2.4rem",
-      borderRadius: "9999px",
+      width: "20rem",
+      height: "20rem",
+      borderRadius: "50%",
     },
     finalDimensions: {
-      width: "12rem",
-      height: "2.4rem",
-      borderRadius: "9999px",
+      width: "50rem",
+      height: "50rem",
+      borderRadius: "50%",
     },
-    duration: 1,
-    ease: "power2.inOut",
+    duration: 2,
+    ease: "power2.out",
+    delay: 0.5,
+  });
+
+  const imageRef = useAnimateFromBottom({
+    duration: 1.5,
+    ease: "power2.out",
+    delay: 1,
+    distance: 300,
+  });
+
+  const textRef = useFadeInEffect({
+    duration: 1.5,
+    ease: "power2.out",
+    delay: 0.8,
   });
 
   return (
-    <div className="flex flex-col gap-4 mt-10">
-      <div className="flex flex-col">
-        <h1 className={`${poppins.className} text-[5rem] leading-[7rem] ml-[-6px]`}>
-          Diego Marcillo
-        </h1>
-        <h2 className={`${poppins.className} font-extralight text-[1.6rem]`}>
-          Ingeniero de Software
-        </h2>
-      </div>
-      <div className="flex flex-col">
-        <div className="flex gap-4">
-          <div className="border-1 border-white rounded-full w-[2.4rem] h-[2.4rem]" />
-          <div className="border-1 border-white rounded-full px-8 py-1 w-fit h-[2.4rem]">
-            <h3 className={`${roboto.className} font-bold text-[1.3rem]`}>
-              2025
-            </h3>
-          </div>
-        </div>
-        <div ref={textRef}>
-          <p
-            className={`${roboto.className} font-bold text-[18rem] text-[#FFDCC0] leading-[16rem]`}
+    <div className="h-screen flex flex-col relative">
+      <div className="flex-1 flex items-center justify-center">
+        <div className="flex flex-col items-center justify-center relative">
+          <h1
+            ref={textRef}
+            className={`font-[mazurquica-vf] text-[26rem] leading-[10rem] font-bold relative z-10 transition-colors duration-500`}
+            style={{ color: colors.textSecondary }}
           >
-            Portafolio
-          </p>
+            PORTFOLIO
+          </h1>
         </div>
-        <div className="flex gap-4 self-end">
-          <div className="rounded-full w-[2.4rem] h-[2.4rem] bg-[#FFDCC0]" />
-          <div
-            ref={boxRef}
-            className="rounded-full py-1 w-[2.4rem] h-[2.4rem] bg-[#FFDCC0]"
+      </div>
+
+      <div className="h-1/3 flex items-end justify-center pb-8">
+        <div ref={imageRef} className="relative z-20">
+          <Image
+            src="/differm.png"
+            alt="Differm"
+            width={700}
+            height={200}
+            className="object-contain"
           />
         </div>
       </div>
-      <div className="border-1 border-white mt-20" />
     </div>
   );
 };
-
 export default Hero;
